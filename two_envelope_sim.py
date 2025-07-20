@@ -40,6 +40,32 @@ class Game(object):
         return (env_id, self.envelopes[env_id])
 
 
+
+# this game is NOT the two envelopes problem, but it's what it feels like maybe it is
+class GamePostHoc(object):
+    _secret_max = 1234.5
+
+    def __init__(self):
+        self.left_id = 'L'
+        self.right_id = 'R'
+        self.first_value = random.random()*self._secret_max
+
+    def get_envelope(self, choose_left):
+        env_id = self.left_id if choose_left else self.right_id
+        return (env_id, self.first_value)
+
+    def switch(self, prev_env_id):
+        env_id = self.left_id if (prev_env_id == self.right_id) else self.right_id
+        new_val_bigger = fifty_fifty()
+        new_val = None
+        if new_val_bigger:
+            new_val = 2.0*self.first_value
+        else:
+            new_val = 0.5*self.first_value
+        return (env_id, new_val)
+
+
+
 def play_switch():
     g = Game()
     e_id, _ = g.get_envelope(fifty_fifty())
