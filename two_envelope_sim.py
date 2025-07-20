@@ -6,6 +6,9 @@ def fifty_fifty():
 
 
 class Game(object):
+    # players can't know this or they can infer which envelope they have.
+    # in theory needs to be variable up to infinity but we will just have the players ignore it.
+    _secret_max = 1234.5
 
     def __init__(self):
         self.left_id = 'L'
@@ -15,12 +18,13 @@ class Game(object):
                 self.right_id: None
             }
         left_is_bigger = fifty_fifty()
+        bigger = random.random()*self._secret_max
         if left_is_bigger:
-            self.envelopes[self.left_id] = 20
-            self.envelopes[self.right_id] = 10
+            self.envelopes[self.left_id] = bigger
+            self.envelopes[self.right_id] = bigger/2.0
         else:
-            self.envelopes[self.left_id] = 10
-            self.envelopes[self.right_id] = 20
+            self.envelopes[self.left_id] = bigger/2.0
+            self.envelopes[self.right_id] = bigger
         # unnecessary, just making the point since it's hardcoded
         left = self.envelopes[self.left_id]
         right = self.envelopes[self.right_id]
@@ -32,7 +36,7 @@ class Game(object):
 
     def switch(self, prev_env_id):
         assert (prev_env_id in (self.left_id, self.right_id))
-        env_id = self.left_id if (prev_env_id == self.right_id) else self.left_id
+        env_id = self.left_id if (prev_env_id == self.right_id) else self.right_id
         return (env_id, self.envelopes[env_id])
 
 
