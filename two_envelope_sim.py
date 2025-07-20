@@ -55,5 +55,5 @@ switch = sum(play_switch() for x in range(n))
 stay = sum(play_stay() for x in range(n))
 
 print(f'Played {n} games')
-print(f'Total for switch: {switch}')
-print(f'Total for stay: {stay}')
+print(f'Total for switch:  {switch}')
+print(f'Total for stay:    {stay}')
